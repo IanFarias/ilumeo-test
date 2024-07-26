@@ -16,6 +16,8 @@ services:
   app:
     build: .
     container_name: ilumeo_api
+    environment:
+      DB_HOST: database_ilumeo
     ports:
       - 8080:8080
     volumes:

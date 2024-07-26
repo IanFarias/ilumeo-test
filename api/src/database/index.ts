@@ -1,13 +1,22 @@
-import { createConnection, getConnectionOptions } from 'typeorm';
+import { DataSource } from 'typeorm';
 
-interface IOptions {
-  host: string;
-}
+export const AppDataSource = new DataSource({
+  type: 'postgres',
+  host: process.env.DB_HOST || 'localhost',
+  port: 5432,
+  username: 'ilumeodb',
+  password: 'ilumeo',
+  database: 'database_ilumeo',
+  synchronize: false,
+  entities: ['./src/modules/**/entities/*.ts'],
+  migrations: ['src/database/migrations/*.ts'],
+  logging: true,
+});
 
-// getConnectionOptions().then((options) => {
-//   const newOptions = options as IOptions;
-//   newOptions.host = 'database_ilumeo';
-//   createConnection({
-//     ...options,
-//   });
-// });
+AppDataSource.initialize()
+  .then(() => {
+    console.log('Data Source has been initialized!');
+  })
+  .catch((err) => {
+    console.error('Error during Data Source initialization', err);
+  });
