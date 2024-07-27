@@ -3,13 +3,14 @@ import 'reflect-metadata';
 import 'express-async-errors';
 import { routes } from '@routes/index';
 import '@database/index';
+import '@shared/container';
 import AppError from '@shared/errors/AppError';
 
 const app = express();
 
 app.use(express.json());
 
-app.use(routes);
+app.use('/api', routes);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {

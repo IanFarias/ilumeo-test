@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import timeClockRoutes from './timeClock.routes';
+import shiftRoutes from './shiftRoutes.routes';
+import authRoutes from './auth.routes';
 
 const routes = Router();
 
-routes.use('/timeClock', timeClockRoutes);
+routes.use('/auth', authRoutes);
+routes.use('/shift', shiftRoutes);
 
 export { routes };
