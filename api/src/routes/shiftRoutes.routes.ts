@@ -1,10 +1,17 @@
-import { ClockInController } from '@modules/shift/useCases/clockIn/ClockInController';
+import { ShiftController } from '@modules/shift/ShiftController';
 import { Router } from 'express';
+import { ensureAuthentication } from 'middlewares/ensureAuthentication';
 
-const clockInController = new ClockInController();
+const shiftController = new ShiftController();
 
 const shiftRoutes = Router();
 
-shiftRoutes.get('/clockIn', clockInController.handleRequest);
+shiftRoutes.get('/', ensureAuthentication, shiftController.getUserHistory);
+shiftRoutes.post('/clockIn', ensureAuthentication, shiftController.clockIn);
+shiftRoutes.patch(
+  '/clockOut/:id',
+  ensureAuthentication,
+  shiftController.clockOut,
+);
 
 export default shiftRoutes;
