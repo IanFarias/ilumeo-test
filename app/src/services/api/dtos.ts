@@ -4,3 +4,8 @@ export type Shift = {
   clockOut: Date;
   isFinished: true;
 };
+
+export type ActiveShift = {
+  id: string;
+  clockIn: Date;
+};

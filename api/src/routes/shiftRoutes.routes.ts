@@ -7,11 +7,12 @@ const shiftController = new ShiftController();
 const shiftRoutes = Router();
 
 shiftRoutes.get('/', ensureAuthentication, shiftController.getUserHistory);
-shiftRoutes.post('/clockIn', ensureAuthentication, shiftController.clockIn);
-shiftRoutes.patch(
-  '/clockOut/:id',
+shiftRoutes.get(
+  '/active',
   ensureAuthentication,
-  shiftController.clockOut,
+  shiftController.getActiveShift,
 );
+shiftRoutes.post('/clockIn', ensureAuthentication, shiftController.clockIn);
+shiftRoutes.patch('/clockOut', ensureAuthentication, shiftController.clockOut);
 
 export default shiftRoutes;

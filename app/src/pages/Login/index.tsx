@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     email: "",
     password: "",
   });
-  const { login, user } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = ({ target }: { target: HTMLInputElement }) => {
@@ -30,7 +30,6 @@ const Login: React.FC = () => {
 
     try {
       await login(inputValues);
-      console.log(user);
 
       navigate(SCREEN_PATHS.home);
     } catch (e) {

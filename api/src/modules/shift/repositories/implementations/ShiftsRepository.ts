@@ -11,6 +11,15 @@ class ShiftsRepository implements IShiftsRepository {
     this.repository = AppDataSource.getRepository(Shift);
   }
 
+  async hasActiveShift(user_id: string): Promise<boolean> {
+    const hasActive = await this.repository.existsBy({
+      user_id: Equal(user_id),
+      isFinished: false,
+    });
+
+    return hasActive;
+  }
+
   async findById(id: string): Promise<Shift | null> {
     const shift = await this.repository.findOneBy({ id });
 
@@ -24,15 +33,32 @@ class ShiftsRepository implements IShiftsRepository {
   async create(user: User): Promise<void> {
     const shift = this.repository.create({
       user_id: user,
+      clockIn: new Date(),
     });
 
     this.repository.save(shift);
   }
 
-  async findAllByUser(userId: string): Promise<Shift[]> {
-    const shifts = await this.repository.findBy({ user_id: Equal(userId) });
+  async findAllByUser(user_id: string): Promise<Shift[]> {
+    const shifts = await this.repository.find({
+      where: {
+        user_id: Equal(user_id),
+      },
+      order: {
+        created_at: 'DESC',
+      },
+    });
 
     return shifts;
+  }
+
+  async findActiveByUser(user_id: string): Promise<Shift | null> {
+    const shift = await this.repository.findOneBy({
+      user_id: Equal(user_id),
+      isFinished: false,
+    });
+
+    return shift;
   }
 }
 

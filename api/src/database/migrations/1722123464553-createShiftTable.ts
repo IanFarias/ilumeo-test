@@ -19,7 +19,7 @@ export class CreateShiftTable1722123464553 implements MigrationInterface {
           {
             name: 'clockIn',
             type: 'timestamp',
-            default: 'now()',
+            isNullable: true,
           },
           {
             name: 'clockOut',
@@ -57,6 +57,7 @@ export class CreateShiftTable1722123464553 implements MigrationInterface {
         referencedColumnNames: ['id'],
         referencedTableName: 'users',
         onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       }),
     );
   }

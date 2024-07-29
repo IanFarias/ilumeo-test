@@ -6,6 +6,8 @@ import Icon from "../../components/Icon";
 import { useApi } from "../../services/api/useApi";
 import TableList from "../../components/TableList";
 import Button from "../../components/baseComponents/Button";
+import { ActiveShift } from "../../services/api/dtos";
+import { getTimer } from "../../utils/date";
 import * as S from "./styles";
 
 const columns = [
@@ -16,9 +18,11 @@ const columns = [
 ];
 
 const Home: React.FC = () => {
+  const [active, setActive] = useState<ActiveShift | null>(null);
+  const [timer, setTimer] = useState<string>("");
   const [shifts, setShifts] = useState<any[] | null>(null);
   const { user } = useContext(AuthContext);
-  const { userHitory } = useApi();
+  const { userHitory, activeShift, clockIn, clockOut } = useApi();
 
   const getShifts = async () => {
     const response = await userHitory();
@@ -26,9 +30,41 @@ const Home: React.FC = () => {
     setShifts(response);
   };
 
+  const getActiveShift = async () => {
+    const response = await activeShift();
+
+    setActive(response);
+  };
+
+  const handleAction = async () => {
+    if (!active) {
+      await clockIn();
+      getShifts();
+      getActiveShift();
+      return;
+    }
+
+    if (active) {
+      await clockOut(active?.id);
+      setActive(null);
+      getShifts();
+    }
+  };
+
   useEffect(() => {
     getShifts();
+    getActiveShift();
   }, []);
+
+  useEffect(() => {
+    if (active) {
+      const intervalId = setInterval(() => {
+        setTimer(getTimer(active.clockIn));
+      }, 100);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [active]);
 
   return (
     <S.Container>
@@ -39,9 +75,28 @@ const Home: React.FC = () => {
           <Icon icon="user" size={32} />
         </S.User>
       </S.UserInfoContainer>
-      <h2>00h 00m</h2>
-      <Button type="button">Registrar entradas</Button>
-      <TableList columns={columns} rows={shifts || []} />
+      <S.DisplaySection>
+        <h2>Hoje</h2>
+
+        <S.Display>{active ? timer : "00h 00m"}</S.Display>
+      </S.DisplaySection>
+      {!active && (
+        <Button type="button" onClick={handleAction}>
+          Registrar entradas
+        </Button>
+      )}
+
+      {active && (
+        <Button type="button" onClick={handleAction}>
+          Registrar saída
+        </Button>
+      )}
+      <S.ShiftsSection>
+        <h2>Histórico</h2>
+        <S.TableContainer>
+          <TableList columns={columns} rows={shifts || []} />
+        </S.TableContainer>
+      </S.ShiftsSection>
     </S.Container>
   );
 };

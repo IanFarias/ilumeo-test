@@ -15,9 +15,9 @@ class ShiftController {
 
   async clockOut(request: Request, response: Response): Promise<Response> {
     const shiftService = container.resolve(ShiftService);
-    const { id } = request.params;
+    const { shift_id } = request.body;
 
-    await shiftService.clockOut(id);
+    await shiftService.clockOut(shift_id);
 
     return response.status(200).send();
   }
@@ -32,6 +32,16 @@ class ShiftController {
     const shifts = await shiftService.getUserHistory(id);
 
     return response.status(200).json(shifts);
+  }
+
+  async getActiveShift(request: Request, response: Response) {
+    const shiftService = container.resolve(ShiftService);
+
+    const { id } = request.user;
+
+    const shift = await shiftService.getActiveShift(id);
+
+    return response.status(200).json(shift);
   }
 }
 

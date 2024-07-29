@@ -29,11 +29,14 @@ export const useHttp = (
 
   const get = <T>(url: string) => axiosInstace.get<T>(url).then(responseBody);
 
-  const post = <T>(url: string, body: {}) =>
+  const post = <T>(url: string, body?: {}) =>
     axiosInstace.post<T>(url, body).then(responseBody);
 
   const update = <T>(url: string, body: {}) =>
     axiosInstace.put<T>(url, body).then(responseBody);
 
-  return { get, post, update };
+  const patch = <T>(url: string, body: {}) =>
+    axiosInstace.patch<T>(url, body).then(responseBody);
+
+  return { get, post, update, patch };
 };

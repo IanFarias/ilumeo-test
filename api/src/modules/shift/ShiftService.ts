@@ -3,7 +3,8 @@ import { UserService } from '@modules/user/UserService';
 import { container, inject, injectable } from 'tsyringe';
 import { formatDate, getHourFormated, hoursBetweenDates } from 'utils/date';
 import IShiftsRepository from './repositories/IShiftsRepository';
-import { ListUserShiftsDTO } from './dtos/ListUserShiftsDTO';
+import { ListShiftsDTO } from './dtos/ListShiftsDTO';
+import { ActiveShiftDTO } from './dtos/ActiveShiftDTO';
 
 @injectable()
 class ShiftService {
@@ -12,9 +13,14 @@ class ShiftService {
     private repository: IShiftsRepository,
   ) {}
 
-  async clockIn(userId: string) {
+  async clockIn(user_id: string) {
     const userService = container.resolve(UserService);
-    const user = await userService.findById(userId);
+    const user = await userService.findById(user_id);
+    const hasActive = await this.repository.hasActiveShift(user_id);
+
+    if (hasActive) {
+      throw new AppError('User Already Has Shift Active.', 400);
+    }
 
     await this.repository.create(user);
   }
@@ -38,18 +44,27 @@ class ShiftService {
   async getUserHistory(userId: string) {
     const usersList = await this.repository.findAllByUser(userId);
 
-    const response = usersList.map(({ id, clockIn, clockOut, created_at }) => {
-      // eslint-disable-next-line no-new
-      return new ListUserShiftsDTO(
+    const response = usersList.map(({ id, clockIn, clockOut, isFinished }) => {
+      return new ListShiftsDTO(
         id,
         getHourFormated(clockIn),
-        getHourFormated(clockOut),
+        isFinished ? getHourFormated(clockOut) : null,
         formatDate(clockIn),
-        hoursBetweenDates(clockIn, clockOut),
-        created_at,
+        isFinished ? hoursBetweenDates(clockIn, clockOut) : null,
       );
     });
     return response;
+  }
+
+  async getActiveShift(user_id: string) {
+    const shift = await this.repository.findActiveByUser(user_id);
+
+    if (shift) {
+      const shiftDTO = new ActiveShiftDTO(shift.id, shift.clockIn);
+      return shiftDTO;
+    }
+
+    return null;
   }
 }
 

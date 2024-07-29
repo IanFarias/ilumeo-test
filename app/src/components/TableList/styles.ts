@@ -10,21 +10,23 @@ export const GuardianTable = styled.table`
 
   tr {
     height: 48px;
+  }
 
-    :last-child {
-      text-align: right;
-    }
+  th:last-of-type {
+    text-align: right;
   }
 
   td {
     height: 100%;
+    padding: 14px;
+
+    &:last-child {
+      text-align: right;
+    }
   }
 
   tr.grey {
-    background-color: ${({ theme }) => theme.colors.grey[300]};
-    td {
-      border-left: 1px solid ${({ theme }) => theme.colors.white};
-    }
+    background-color: ${({ theme }) => theme.colors.grey[500]};
   }
 
   .options-column {

@@ -30,7 +30,7 @@ const defaultTheme: ITheme = {
       200: "#AAAAAA",
       300: "#575757",
       400: "#E7E7E7",
-      500: "#F4F4F4",
+      500: "#F7F7F7",
       600: "#D6D6D6",
     },
   },
