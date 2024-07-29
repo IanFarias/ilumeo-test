@@ -33,11 +33,9 @@ class AuthenticateUserService {
     });
 
     const tokenReturn = {
+      id: user.id,
+      email: user.email,
       token,
-      user: {
-        name: user.name,
-        email: user.email,
-      },
     };
 
     return tokenReturn;
