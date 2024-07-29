@@ -33,7 +33,9 @@ const TableList: React.FC<Props> = ({ columns, rows }) => {
           return (
             <tr className={variant} key={"tablelist-" + index}>
               {columns.map((column, index) => (
-                <td key={`tablelist-item-${index}`}>{row[column.field]}</td>
+                <td key={`tablelist-item-${index}`}>
+                  {row[column.field] || "-"}
+                </td>
               ))}
             </tr>
           );
