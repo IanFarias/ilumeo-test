@@ -8,7 +8,7 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from '@modules/user/entities/User';
+import { User } from '../../user/entities/User';
 
 @Entity('shifts')
 class Shift {
