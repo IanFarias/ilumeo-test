@@ -82,7 +82,7 @@ const Home: React.FC = () => {
       </S.DisplaySection>
       {!active && (
         <Button type="button" onClick={handleAction}>
-          Registrar entradas
+          Registrar entrada
         </Button>
       )}
 
