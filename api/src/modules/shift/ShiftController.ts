@@ -3,20 +3,20 @@ import { container } from 'tsyringe';
 import { ShiftService } from './ShiftService';
 
 class ShiftController {
-  constructor(private readonly service: ShiftService) {}
-
   async clockIn(request: Request, response: Response): Promise<Response> {
     const { id } = request.user;
+    const shiftService = container.resolve(ShiftService);
 
-    await this.service.clockIn(id);
+    await await shiftService.clockIn(id);
 
     return response.status(201).send();
   }
 
   async clockOut(request: Request, response: Response): Promise<Response> {
     const { shift_id } = request.body;
+    const shiftService = container.resolve(ShiftService);
 
-    await this.service.clockOut(shift_id);
+    await await shiftService.clockOut(shift_id);
 
     return response.status(200).send();
   }
@@ -36,8 +36,9 @@ class ShiftController {
 
   async getActiveShift(request: Request, response: Response) {
     const { id } = request.user;
+    const shiftService = container.resolve(ShiftService);
 
-    const shift = await this.service.getActiveShift(id);
+    const shift = await shiftService.getActiveShift(id);
 
     return response.status(200).json(shift);
   }
