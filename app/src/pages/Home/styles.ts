@@ -25,8 +25,11 @@ export const DisplaySection = styled.section`
 `;
 
 export const Display = styled.span`
+  display: block;
   font-size: 3.2rem;
+  width: 100%;
   text-align: center;
+  font-weight: bold;
 `;
 
 export const ShiftsSection = styled.section`
