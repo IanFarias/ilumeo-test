@@ -1,8 +1,8 @@
 import AppError from '@shared/errors/AppError';
 import { UserService } from '@modules/user/UserService';
 import { container, inject, injectable } from 'tsyringe';
-import { formatDate, getHourFormated, hoursBetweenDates } from 'utils/date';
-import IShiftsRepository from './repositories/IShiftsRepository';
+import { formatDate, getHourFormated, hoursBetweenDates } from '@utils/date';
+import IShiftsRepository from '@repositories/IShiftsRepository';
 import { ListShiftsDTO } from './dtos/ListShiftsDTO';
 import { ActiveShiftDTO } from './dtos/ActiveShiftDTO';
 

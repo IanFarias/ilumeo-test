@@ -1,5 +1,5 @@
+import { Shift } from '@modules/shift/entities/Shift';
 import { User } from '@modules/user/entities/User';
-import { Shift } from '../entities/Shift';
 
 export default interface IShiftsRepository {
   create(user: User): Promise<void>;

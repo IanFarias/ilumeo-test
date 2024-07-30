@@ -13,7 +13,9 @@
       "@database/*": ["database/*"],
       "@modules/*": ["modules/*"],
       "@routes/*": ["routes/*"],
-      "@shared/*": ["shared/*"]
+      "@shared/*": ["shared/*"],
+      "@utils/*": ["utils/*"],
+      "@repositories/*": ["repositories/*"],
     },                                        
     "esModuleInterop": true,                             
     "forceConsistentCasingInFileNames": true,           

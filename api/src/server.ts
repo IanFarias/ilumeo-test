@@ -2,9 +2,9 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import 'reflect-metadata';
 import 'express-async-errors';
-import { routes } from '@routes/index';
 import '@database/index';
 import '@shared/container';
+import { routes } from '@routes/index';
 import AppError from '@shared/errors/AppError';
 
 const app = express();

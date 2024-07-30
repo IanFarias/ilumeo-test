@@ -1,7 +1,7 @@
-import { ShiftsRepository } from '@modules/shift/repositories/implementations/ShiftsRepository';
-import IShiftsRepository from '@modules/shift/repositories/IShiftsRepository';
-import { UsersRepository } from '@modules/user/repositories/implementations/UsersRepository';
-import IUsersRepository from '@modules/user/repositories/IUsersRepository';
+import { ShiftsRepository } from 'repositories/implementations/ShiftsRepository';
+import { UsersRepository } from 'repositories/implementations/UsersRepository';
+import IShiftsRepository from 'repositories/IShiftsRepository';
+import IUsersRepository from 'repositories/IUsersRepository';
 import { container } from 'tsyringe';
 
 container.registerSingleton<IUsersRepository>(

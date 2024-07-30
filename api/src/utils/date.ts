@@ -4,7 +4,7 @@ export const formatDate = (date: Date) => {
   return dayjs(date).format('DD/MM/YY');
 };
 
-const formatHours = (hours: number, minutes: number) => {
+export const formatHours = (hours: number, minutes: number) => {
   const formattedHours = String(hours).padStart(2, '0');
   const formattedMinutes = String(minutes).padStart(2, '0');
 

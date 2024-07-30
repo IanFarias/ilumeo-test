@@ -1,8 +1,10 @@
 import { ShiftController } from '@modules/shift/ShiftController';
+import { ShiftService } from '@modules/shift/ShiftService';
 import { Router } from 'express';
 import { ensureAuthentication } from 'middlewares/ensureAuthentication';
+import { container } from 'tsyringe';
 
-const shiftController = new ShiftController();
+const shiftController = new ShiftController(container.resolve(ShiftService));
 
 const shiftRoutes = Router();
 
