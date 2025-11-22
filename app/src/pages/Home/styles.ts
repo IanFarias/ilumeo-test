@@ -49,4 +49,5 @@ export const User = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
+  gap: 8px;
 `;
