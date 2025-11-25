@@ -48,5 +48,5 @@ export const TableContainer = styled.div`
 export const User = styled.div`
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
 `;
